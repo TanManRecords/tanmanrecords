@@ -1,0 +1,459 @@
+/* CSS Variables */
+:root {
+    --bg: #191a1a;
+    --text: #d0bf7a;
+    --text-dim: #9c8f5a;
+    --line: #d0bf7a40;
+}
+
+/* Reset and Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background-color: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    line-height: 1.6;
+}
+
+html {
+    background-color: var(--bg);
+}
+
+/* Header */
+header {
+    padding: 40px 20px 30px;
+    text-align: center;
+}
+
+.logo-link {
+    display: inline-block;
+    margin-bottom: 25px;
+}
+
+.logo {
+    width: 80px;
+    height: auto;
+    display: block;
+}
+
+nav {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    font-size: 14px;
+    letter-spacing: 1px;
+}
+
+nav a {
+    color: var(--text);
+    text-decoration: none;
+    transition: color 0.3s ease;
+    padding: 5px;
+}
+
+nav a:hover,
+nav a:focus {
+    color: #fff;
+    outline: 1px solid var(--line);
+    outline-offset: 3px;
+}
+
+/* Main Content */
+main {
+    flex: 1;
+    padding: 20px;
+}
+
+/* Footer */
+footer {
+    text-align: center;
+    padding: 40px 20px;
+    font-size: 12px;
+    color: var(--text-dim);
+    line-height: 1.8;
+}
+
+footer a {
+    color: var(--text-dim);
+    text-decoration: none;
+}
+
+footer a:hover {
+    color: var(--text);
+}
+
+/* Player Container - Homepage */
+.player-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 60px 20px;
+}
+
+.wheel-container {
+    margin-bottom: 50px;
+}
+
+.record-wheel {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 80px;
+    margin-bottom: 40px;
+    padding: 20px 0;
+}
+
+.record {
+    cursor: pointer;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+}
+
+.record img {
+    display: block;
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    background-color: #333;
+}
+
+.record.prev,
+.record.next {
+    width: 200px;
+    opacity: 0.6;
+}
+
+.record.center {
+    width: 320px;
+    box-shadow: 0 0 60px rgba(208, 191, 122, 0.3);
+    border: 3px solid var(--text);
+}
+
+.record:hover {
+    transform: scale(1.05);
+}
+
+.record.center:hover {
+    transform: scale(1.02);
+}
+
+.track-title {
+    text-align: center;
+    font-size: 13px;
+    letter-spacing: 3px;
+    margin-bottom: 35px;
+    text-transform: uppercase;
+    min-height: 20px;
+    color: var(--text-dim);
+}
+
+/* Player Controls */
+.player-controls {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.progress-container {
+    margin-bottom: 25px;
+    padding: 0 10px;
+}
+
+.progress-bar {
+    height: 2px;
+    background: var(--line);
+    position: relative;
+    cursor: pointer;
+}
+
+.progress-fill {
+    height: 100%;
+    background: var(--text);
+    width: 0;
+    transition: width 0.1s linear;
+}
+
+.progress-knob {
+    width: 12px;
+    height: 12px;
+    background: var(--text);
+    border-radius: 50%;
+    position: absolute;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    left: 0;
+    cursor: grab;
+    box-shadow: 0 0 10px rgba(208, 191, 122, 0.4);
+}
+
+.progress-knob:active {
+    cursor: grabbing;
+}
+
+.controls-row {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+}
+
+.control-btn {
+    background: none;
+    border: none;
+    color: var(--text);
+    cursor: pointer;
+    padding: 8px;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+}
+
+.control-btn svg {
+    fill: currentColor;
+}
+
+.control-btn:hover {
+    color: #fff;
+    background: rgba(208, 191, 122, 0.1);
+}
+
+.control-btn:focus {
+    outline: 1px solid var(--text);
+    outline-offset: 2px;
+}
+
+.control-btn.play-pause {
+    width: 56px;
+    height: 56px;
+    border: 2px solid var(--text);
+}
+
+.control-btn.shuffle.active,
+.control-btn.repeat.active {
+    color: #fff;
+    background: rgba(208, 191, 122, 0.2);
+}
+
+/* About Page */
+.about-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 400px;
+    padding: 60px 20px;
+}
+
+.about-text {
+    text-align: center;
+    max-width: 600px;
+    font-size: 16px;
+    letter-spacing: 3px;
+    line-height: 1.8;
+    font-weight: 700;
+}
+
+.about-text p {
+    margin: 0;
+}
+
+.about-text a {
+    color: var(--text);
+    text-decoration: none;
+}
+
+.about-text a:hover {
+    color: #fff;
+}
+
+/* Merch Page */
+.merch-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px 20px;
+}
+
+.merch-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 40px;
+    align-items: center;
+    justify-items: center;
+}
+
+.merch-item img {
+    width: 100%;
+    max-width: 250px;
+    height: auto;
+    display: block;
+}
+
+.right-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.merch-item-top,
+.merch-item-bottom {
+    position: relative;
+}
+
+.merch-item-bottom {
+    margin-left: 20px;
+}
+
+/* Events Page */
+.events-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px 20px;
+}
+
+.events-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 30px;
+    justify-items: center;
+}
+
+.event-poster img {
+    width: 100%;
+    max-width: 260px;
+    height: auto;
+    display: block;
+}
+
+/* Music Landing Page */
+.music-landing {
+    text-align: center;
+    padding: 80px 20px;
+}
+
+.music-landing h1 {
+    font-size: 32px;
+    letter-spacing: 4px;
+    margin-bottom: 30px;
+    font-weight: 300;
+}
+
+.music-landing p {
+    font-size: 16px;
+    margin-bottom: 40px;
+    color: var(--text-dim);
+}
+
+.home-button {
+    display: inline-block;
+    padding: 12px 40px;
+    border: 1px solid var(--text);
+    color: var(--text);
+    text-decoration: none;
+    letter-spacing: 2px;
+    transition: all 0.3s ease;
+}
+
+.home-button:hover {
+    background: var(--text);
+    color: var(--bg);
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+    /* Header */
+    header {
+        padding: 30px 20px 20px;
+    }
+
+    .logo {
+        width: 60px;
+    }
+
+    nav {
+        gap: 20px;
+        font-size: 12px;
+    }
+
+    /* Player Mobile */
+    .record-wheel {
+        flex-direction: column;
+        gap: 0;
+    }
+
+    .record.prev,
+    .record.next {
+        display: none;
+    }
+
+    .record.center {
+        width: 90%;
+        max-width: 350px;
+    }
+
+    .track-title {
+        font-size: 12px;
+        letter-spacing: 1px;
+    }
+
+    .controls-row {
+        gap: 20px;
+    }
+
+    .control-btn.play-pause {
+        width: 48px;
+        height: 48px;
+    }
+
+    /* About Mobile */
+    .about-text {
+        font-size: 14px;
+        letter-spacing: 2px;
+        padding: 20px;
+    }
+
+    /* Merch Mobile */
+    .merch-grid {
+        grid-template-columns: 1fr;
+        gap: 30px;
+    }
+
+    .right-stack {
+        align-items: center;
+    }
+
+    .merch-item-bottom {
+        margin-left: 0;
+    }
+
+    /* Events Mobile */
+    .events-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+    }
+
+    .event-poster img {
+        max-width: 100%;
+    }
+
+    /* Music Landing Mobile */
+    .music-landing h1 {
+        font-size: 24px;
+    }
+
+    .music-landing p {
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 480px) {
+    .events-grid {
+        grid-template-columns: 1fr;
+    }
+}

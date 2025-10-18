@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tan Man Records</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <a href="/" class="logo-link">
+            <img src="images/LOGO.gif" alt="Tan Man Records" class="logo">
+        </a>
+        <nav>
+            <a href="about.html">ABOUT</a>
+            <a href="music.html">MUSIC</a>
+            <a href="merch.html">MERCH</a>
+            <a href="events.html">EVENTS</a>
+        </nav>
+    </header>
+
+    <main class="player-container">
+        <div class="wheel-container">
+            <div class="record-wheel">
+                <div class="record prev" role="button" tabindex="0" aria-label="Previous track">
+                    <img src="" alt="" loading="eager">
+                </div>
+                <div class="record center" role="button" tabindex="0" aria-label="Current track">
+                    <img src="" alt="" loading="eager">
+                </div>
+                <div class="record next" role="button" tabindex="0" aria-label="Next track">
+                    <img src="" alt="" loading="eager">
+                </div>
+            </div>
+        </div>
+
+        <div class="track-title"></div>
+
+        <div class="player-controls">
+            <div class="progress-container">
+                <div class="progress-bar">
+                    <div class="progress-fill"></div>
+                    <div class="progress-knob" role="slider" aria-label="Seek" tabindex="0"></div>
+                </div>
+            </div>
+            
+            <div class="controls-row">
+                <button class="control-btn shuffle" aria-label="Shuffle" tabindex="0">
+                    <svg viewBox="0 0 24 24" width="20" height="20">
+                        <path d="M10.59 9.17L5.41 4 4 5.41l5.17 5.17 1.42-1.41zM14.5 4l2.04 2.04L4 18.59 5.41 20 17.96 7.46 20 9.5V4h-5.5zm.33 9.41l-1.41 1.41 3.13 3.13L14.5 20H20v-5.5l-2.04 2.04-3.13-3.13z"/>
+                    </svg>
+                </button>
+                <button class="control-btn prev" aria-label="Previous track" tabindex="0">
+                    <svg viewBox="0 0 24 24" width="24" height="24">
+                        <path d="M6 6h2v12H6zm3.5 6l8.5 6V6z"/>
+                    </svg>
+                </button>
+                <button class="control-btn play-pause" aria-label="Play/Pause" tabindex="0">
+                    <svg class="play-icon" viewBox="0 0 24 24" width="32" height="32">
+                        <path d="M8 5v14l11-7z"/>
+                    </svg>
+                    <svg class="pause-icon" viewBox="0 0 24 24" width="32" height="32" style="display: none;">
+                        <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>
+                    </svg>
+                </button>
+                <button class="control-btn next" aria-label="Next track" tabindex="0">
+                    <svg viewBox="0 0 24 24" width="24" height="24">
+                        <path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z"/>
+                    </svg>
+                </button>
+                <button class="control-btn repeat" aria-label="Repeat" tabindex="0">
+                    <svg viewBox="0 0 24 24" width="20" height="20">
+                        <path d="M7 7h10v3l4-4-4-4v3H5v6h2V7zm10 10H7v-3l-4 4 4 4v-3h12v-6h-2v4z"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+        <audio id="player"></audio>
+    </main>
+
+    <footer>
+        <p>© 2025 Tan Man Records</p>
+        <p>All rights reserved.</p>
+        <p><a href="mailto:contact@tanmanrecords.com">contact@tanmanrecords.com</a></p>
+    </footer>
+
+    <script src="main.js"></script>
+</body>
+</html>

@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TAN MAN Records</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        html, body {
+            height: 100%;
+            width: 100%;
+            overflow-x: hidden;
+        }
+        
+        body {
+            background-color: #191a1a;
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            padding: 10px 5%;
+            flex-shrink: 0;
+        }
+        
+        .nav-link {
+            color: #333;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: clamp(10px, 2vw, 12px);
+            letter-spacing: 1px;
+            transition: color 0.3s ease;
+        }
+        
+        .nav-link:hover {
+            color: #8B4513;
+        }
+        
+        .logo {
+            height: clamp(240px, 8vh, 240px);
+            width: auto;
+            padding: 10px;
+            max-width: 1200px;
+        }
+        
+        .main-content {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px 5%;
+            width: 100%;
+        }
+        
+        .main-images {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: clamp(10px, 2vw, 40px);
+            flex-wrap: wrap;
+            width: 100%;
+            max-width: 1400px;
+        }
+        
+        .main-image {
+            height: clamp(200px, 25vh, 400px);
+            width: auto;
+            max-width: calc((100vw - 10vw) / 5 - 20px);
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+        
+        .main-image:hover {
+            transform: scale(1.05);
+        }
+        
+        .footer {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: clamp(120px, 4vw, 400px);
+            padding: 80px 5%;
+            width: 100%;
+            flex-shrink: 0;
+        }
+        
+        .icon {
+            height: clamp(40px, 5vh, 80px);
+            width: auto;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+        
+        .icon:hover {
+            transform: scale(1.2);
+        }
+        
+        @media (max-width: 1200px) {
+            .main-image {
+                max-width: calc((100vw - 10vw) / 4 - 20px);
+            }
+        }
+        
+        @media (max-width: 900px) {
+            .header {
+                flex-direction: column;
+                gap: 20px;
+                text-align: center;
+                padding: 30px 5%;
+            }
+            
+            .main-image {
+                max-width: calc((100vw - 10vw) / 3 - 20px);
+                height: clamp(150px, 20vh, 300px);
+            }
+        }
+        
+        @media (max-width: 600px) {
+            .main-images {
+                flex-direction: column;
+                gap: 20px;
+            }
+            
+            .main-image {
+                max-width: 80vw;
+                height: clamp(200px, 30vh, 350px);
+            }
+            
+            .footer {
+                gap: clamp(15px, 6vw, 40px);
+            }
+        }
+        
+        @media (max-width: 400px) {
+            .header {
+                padding: 20px 3%;
+            }
+            
+            .main-content {
+                padding: 15px 3%;
+            }
+            
+            .footer {
+                padding: 30px 3%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <a href="https://tanmanrecords.bandcamp.com/album/tan-man-records-deluxe-singles-vol-1" class="nav-link" target="_blank">BANDCAMP</a>
+        <img src="images/LOGO.gif" alt="TAN MAN Records Logo" class="logo">
+        <a href="#" class="nav-link">MIXCAMP</a>
+    </header>
+    
+    <div class="main-content">
+        <main class="main-images">
+            
+            <img src="images/IMAGE2.png" alt="Main Image" class="main-image">
+           
+        </main>
+    </div>
+    
+</body>
+</html>
