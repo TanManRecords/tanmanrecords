@@ -39,7 +39,7 @@ header {
 }
 
 .logo {
-    width: 120px;
+    width: 80px;
     height: auto;
     display: block;
 }
@@ -277,60 +277,56 @@ footer a:hover {
 .merch-container {
     max-width: 1200px;
     margin: 0 auto;
-    padding: 60px 20px;
+    padding: 40px 20px;
 }
 
 .merch-grid {
-    display: flex;
-    justify-content: center;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 40px;
     align-items: center;
-    gap: 80px;
-    padding: 40px 0;
+    justify-items: center;
 }
 
 .merch-item img {
-    width: 280px;
+    width: 100%;
+    max-width: 250px;
     height: auto;
     display: block;
 }
 
-.merch-item-stacked {
-    position: relative;
-    width: 280px;
+.right-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
 }
 
-.merch-item-stacked .front-shirt {
-    width: 280px;
+.merch-item-top,
+.merch-item-bottom {
     position: relative;
-    z-index: 2;
 }
 
-.merch-item-stacked .back-shirt {
-    width: 280px;
-    position: absolute;
-    top: 40px;
-    left: 40px;
-    z-index: 1;
-    opacity: 0.8;
+.merch-item-bottom {
+    margin-left: 20px;
 }
 
 /* Events Page */
 .events-container {
     max-width: 1200px;
     margin: 0 auto;
-    padding: 60px 20px;
+    padding: 40px 20px;
 }
 
 .events-grid {
-    display: flex;
-    justify-content: center;
-    gap: 40px;
-    padding: 40px 0;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 30px;
+    justify-items: center;
 }
 
 .event-poster img {
-    width: 240px;
+    width: 100%;
+    max-width: 260px;
     height: auto;
     display: block;
 }
@@ -424,29 +420,26 @@ footer a:hover {
 
     /* Merch Mobile */
     .merch-grid {
-        flex-direction: column;
-        gap: 40px;
+        grid-template-columns: 1fr;
+        gap: 30px;
     }
 
-    .merch-item img,
-    .merch-item-stacked,
-    .merch-item-stacked .front-shirt,
-    .merch-item-stacked .back-shirt {
-        width: 240px;
+    .right-stack {
+        align-items: center;
     }
 
-    .merch-item-stacked .back-shirt {
-        top: 30px;
-        left: 30px;
+    .merch-item-bottom {
+        margin-left: 0;
     }
 
     /* Events Mobile */
     .events-grid {
-        gap: 30px;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
     }
 
     .event-poster img {
-        width: 160px;
+        max-width: 100%;
     }
 
     /* Music Landing Mobile */
@@ -461,11 +454,6 @@ footer a:hover {
 
 @media (max-width: 480px) {
     .events-grid {
-        flex-direction: column;
-        gap: 30px;
-    }
-    
-    .event-poster img {
-        width: 280px;
+        grid-template-columns: 1fr;
     }
 }
