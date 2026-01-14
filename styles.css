@@ -400,6 +400,18 @@ footer a:hover {
         width: 90%;
         max-width: 350px;
     }
+    
+    /* Ensure control buttons are visible and larger on mobile */
+    .controls-row .control-btn {
+        padding: 12px;
+        touch-action: manipulation;
+    }
+    
+    .controls-row .control-btn.prev,
+    .controls-row .control-btn.next {
+        width: 44px;
+        height: 44px;
+    }
 
     .track-title {
         font-size: 12px;
