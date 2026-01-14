@@ -1,9 +1,9 @@
 // Track data - exact display order for the wheel
 const tracks = [
+    { title: "DOGHAT - NATURAL HIGH (TMR006)", img: "images/SIPPIN.png", src: "music/SIPPIN.mp3" },
     { title: "HEADBOY - TRACK 6", img: "images/track6.png", src: "music/track 6.m4a" },
-    { title: "SIPPIN", img: "images/SIPPIN.png", src: "music/SIPPIN.mp3" },
-    { title: "D.H.I.T.H", img: "images/D.H.I.T.H.png", src: "music/D.H.I.T.H.mp3" },
-    { title: "FISH CITY", img: "images/fish city.png", src: "music/fish city.m4a" },
+    { title: "DOGHAT - D.H.I.T.H", img: "images/D.H.I.T.H.png", src: "music/D.H.I.T.H.mp3" },
+    { title: "12 HZUI - FISH CITY", img: "images/fish city.png", src: "music/fish city.m4a" },
     { title: "WANKYWANKY", img: "images/wankywanky.png", src: "music/wankywanky.mp3" },
     { title: "STILLNESS", img: "images/stillness.png", src: "music/stillness.m4a" }
 ];
@@ -16,305 +16,366 @@ let isRepeat = false;
 let isDragging = false;
 let hasUserGesture = false;
 
-// DOM elements
-const player = document.getElementById('player');
-const playPauseBtn = document.querySelector('.play-pause');
-const playIcon = document.querySelector('.play-icon');
-const pauseIcon = document.querySelector('.pause-icon');
-const prevBtn = document.querySelector('.prev');
-const nextBtn = document.querySelector('.next');
-const shuffleBtn = document.querySelector('.shuffle');
-const repeatBtn = document.querySelector('.repeat');
-const progressBar = document.querySelector('.progress-bar');
-const progressFill = document.querySelector('.progress-fill');
-const progressKnob = document.querySelector('.progress-knob');
-const trackTitle = document.querySelector('.track-title');
-const prevRecord = document.querySelector('.record.prev');
-const centerRecord = document.querySelector('.record.center');
-const nextRecord = document.querySelector('.record.next');
-
-// Initialize player
-function init() {
-    // Load state from sessionStorage if available
-    const savedState = sessionStorage.getItem('playerState');
-    if (savedState) {
-        const state = JSON.parse(savedState);
-        currentIndex = state.currentIndex || 0;
-        isShuffle = state.isShuffle || false;
-        isRepeat = state.isRepeat || false;
-        
-        // Apply saved button states
-        if (isShuffle) shuffleBtn.classList.add('active');
-        if (isRepeat) repeatBtn.classList.add('active');
+// Wait for DOM
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('DOM loaded, initializing...');
+    
+    // Check if we're on the player page
+    const player = document.getElementById('player');
+    if (!player) {
+        console.log('Not on player page');
+        return;
     }
     
-    updateWheel();
-    setupEventListeners();
-}
-
-// Update the record wheel display
-function updateWheel() {
-    const prevIndex = (currentIndex - 1 + tracks.length) % tracks.length;
-    const nextIndex = (currentIndex + 1) % tracks.length;
-    
-    // Update images
-    if (prevRecord) {
-        prevRecord.querySelector('img').src = tracks[prevIndex].img;
-        prevRecord.querySelector('img').alt = tracks[prevIndex].title;
-    }
-    
-    centerRecord.querySelector('img').src = tracks[currentIndex].img;
-    centerRecord.querySelector('img').alt = tracks[currentIndex].title;
-    
-    if (nextRecord) {
-        nextRecord.querySelector('img').src = tracks[nextIndex].img;
-        nextRecord.querySelector('img').alt = tracks[nextIndex].title;
-    }
-    
-    // Update title
-    trackTitle.textContent = tracks[currentIndex].title;
-    
-    // Update audio source
-    player.src = tracks[currentIndex].src;
-    
-    // Save state
-    saveState();
-}
-
-// Load and play track
-function loadTrack(autoPlay = false) {
-    updateWheel();
-    
-    if (autoPlay && hasUserGesture) {
-        player.play().then(() => {
-            isPlaying = true;
-            updatePlayButton();
-        }).catch(err => console.log('Autoplay prevented:', err));
-    }
-}
-
-// Play/Pause functionality
-function togglePlay() {
-    hasUserGesture = true;
-    
-    if (isPlaying) {
-        player.pause();
-        isPlaying = false;
-    } else {
-        player.play().then(() => {
-            isPlaying = true;
-        }).catch(err => console.log('Play failed:', err));
-    }
-    updatePlayButton();
-}
-
-// Update play button appearance
-function updatePlayButton() {
-    if (isPlaying) {
-        playIcon.style.display = 'none';
-        pauseIcon.style.display = 'block';
-    } else {
-        playIcon.style.display = 'block';
-        pauseIcon.style.display = 'none';
-    }
-}
-
-// Navigate to previous track
-function prevTrack() {
-    hasUserGesture = true;
-    const wasPlaying = isPlaying;
-    currentIndex = (currentIndex - 1 + tracks.length) % tracks.length;
-    loadTrack(wasPlaying);
-}
-
-// Navigate to next track
-function nextTrack() {
-    hasUserGesture = true;
-    const wasPlaying = isPlaying;
-    
-    if (isShuffle) {
-        // Random track but not the same one
-        let newIndex;
-        do {
-            newIndex = Math.floor(Math.random() * tracks.length);
-        } while (newIndex === currentIndex && tracks.length > 1);
-        currentIndex = newIndex;
-    } else {
-        currentIndex = (currentIndex + 1) % tracks.length;
-    }
-    
-    loadTrack(wasPlaying);
-}
-
-// Toggle shuffle
-function toggleShuffle() {
-    isShuffle = !isShuffle;
-    shuffleBtn.classList.toggle('active');
-    saveState();
-}
-
-// Toggle repeat
-function toggleRepeat() {
-    isRepeat = !isRepeat;
-    repeatBtn.classList.toggle('active');
-    saveState();
-}
-
-// Update progress bar
-function updateProgress() {
-    if (!isDragging && player.duration) {
-        const percent = (player.currentTime / player.duration) * 100;
-        progressFill.style.width = percent + '%';
-        progressKnob.style.left = percent + '%';
-    }
-}
-
-// Seek to position
-function seekToPosition(e) {
-    const rect = progressBar.getBoundingClientRect();
-    const percent = Math.max(0, Math.min(100, ((e.clientX - rect.left) / rect.width) * 100));
-    
-    if (player.duration) {
-        player.currentTime = (percent / 100) * player.duration;
-        progressFill.style.width = percent + '%';
-        progressKnob.style.left = percent + '%';
-    }
-}
-
-// Save player state
-function saveState() {
-    const state = {
-        currentIndex,
-        isShuffle,
-        isRepeat
+    // Get elements with detailed logging
+    const elements = {
+        player: player,
+        playPauseBtn: document.querySelector('.control-btn.play-pause'),
+        playIcon: document.querySelector('.play-icon'),
+        pauseIcon: document.querySelector('.pause-icon'),
+        prevBtn: document.querySelector('.control-btn.prev'),
+        nextBtn: document.querySelector('.control-btn.next'),
+        shuffleBtn: document.querySelector('.control-btn.shuffle'),
+        repeatBtn: document.querySelector('.control-btn.repeat'),
+        progressBar: document.querySelector('.progress-bar'),
+        progressFill: document.querySelector('.progress-fill'),
+        progressKnob: document.querySelector('.progress-knob'),
+        trackTitle: document.querySelector('.track-title'),
+        prevRecord: document.querySelector('.record.prev'),
+        centerRecord: document.querySelector('.record.center'),
+        nextRecord: document.querySelector('.record.next')
     };
-    sessionStorage.setItem('playerState', JSON.stringify(state));
-}
-
-// Setup all event listeners
-function setupEventListeners() {
-    // Play/Pause button
-    playPauseBtn.addEventListener('click', togglePlay);
     
-    // Navigation buttons
-    prevBtn.addEventListener('click', prevTrack);
-    nextBtn.addEventListener('click', nextTrack);
-    
-    // Shuffle and Repeat
-    shuffleBtn.addEventListener('click', toggleShuffle);
-    repeatBtn.addEventListener('click', toggleRepeat);
-    
-    // Record clicks
-    if (prevRecord) {
-        prevRecord.addEventListener('click', prevTrack);
-    }
-    if (nextRecord) {
-        nextRecord.addEventListener('click', nextTrack);
-    }
-    
-    // Progress bar clicking
-    progressBar.addEventListener('click', seekToPosition);
-    
-    // Progress knob dragging
-    progressKnob.addEventListener('mousedown', (e) => {
-        isDragging = true;
-        e.preventDefault();
+    // Log what we found
+    console.log('Found elements:', {
+        prevBtn: !!elements.prevBtn,
+        nextBtn: !!elements.nextBtn,
+        playPauseBtn: !!elements.playPauseBtn,
+        centerRecord: !!elements.centerRecord
     });
     
-    document.addEventListener('mousemove', (e) => {
-        if (isDragging) {
-            seekToPosition(e);
-        }
-    });
-    
-    document.addEventListener('mouseup', () => {
-        isDragging = false;
-    });
-    
-    // Touch support for mobile
-    progressKnob.addEventListener('touchstart', (e) => {
-        isDragging = true;
-        e.preventDefault();
-    });
-    
-    document.addEventListener('touchmove', (e) => {
-        if (isDragging && e.touches.length > 0) {
-            const touch = e.touches[0];
-            const rect = progressBar.getBoundingClientRect();
-            const percent = Math.max(0, Math.min(100, ((touch.clientX - rect.left) / rect.width) * 100));
-            
-            if (player.duration) {
-                player.currentTime = (percent / 100) * player.duration;
-                progressFill.style.width = percent + '%';
-                progressKnob.style.left = percent + '%';
+    // Core functions
+    function updateWheel() {
+        const prevIndex = (currentIndex - 1 + tracks.length) % tracks.length;
+        const nextIndex = (currentIndex + 1) % tracks.length;
+        
+        console.log('Updating wheel - Current:', currentIndex, 'Track:', tracks[currentIndex].title);
+        
+        // Update images
+        if (elements.prevRecord) {
+            const img = elements.prevRecord.querySelector('img');
+            if (img) {
+                img.src = tracks[prevIndex].img;
+                img.alt = tracks[prevIndex].title;
             }
         }
+        
+        if (elements.centerRecord) {
+            const img = elements.centerRecord.querySelector('img');
+            if (img) {
+                img.src = tracks[currentIndex].img;
+                img.alt = tracks[currentIndex].title;
+            }
+        }
+        
+        if (elements.nextRecord) {
+            const img = elements.nextRecord.querySelector('img');
+            if (img) {
+                img.src = tracks[nextIndex].img;
+                img.alt = tracks[nextIndex].title;
+            }
+        }
+        
+        // Update title
+        if (elements.trackTitle) {
+            elements.trackTitle.textContent = tracks[currentIndex].title;
+        }
+        
+        // Update audio
+        const wasPlaying = isPlaying;
+        elements.player.src = tracks[currentIndex].src;
+        
+        if (wasPlaying && hasUserGesture) {
+            elements.player.play().catch(err => console.log('Autoplay error:', err));
+        }
+    }
+    
+    function prevTrack() {
+        console.log('PREV CLICKED - Moving from', currentIndex, 'to', (currentIndex - 1 + tracks.length) % tracks.length);
+        hasUserGesture = true;
+        currentIndex = (currentIndex - 1 + tracks.length) % tracks.length;
+        updateWheel();
+    }
+    
+    function nextTrack() {
+        console.log('NEXT CLICKED - Moving from', currentIndex, 'to', (currentIndex + 1) % tracks.length);
+        hasUserGesture = true;
+        
+        if (isShuffle && tracks.length > 1) {
+            let newIndex;
+            do {
+                newIndex = Math.floor(Math.random() * tracks.length);
+            } while (newIndex === currentIndex);
+            currentIndex = newIndex;
+        } else {
+            currentIndex = (currentIndex + 1) % tracks.length;
+        }
+        
+        updateWheel();
+    }
+    
+    function togglePlay() {
+        console.log('PLAY/PAUSE CLICKED');
+        hasUserGesture = true;
+        
+        if (isPlaying) {
+            elements.player.pause();
+            isPlaying = false;
+        } else {
+            elements.player.play().then(() => {
+                isPlaying = true;
+            }).catch(err => {
+                console.error('Play error:', err);
+                isPlaying = false;
+            });
+        }
+        updatePlayButton();
+    }
+    
+    function updatePlayButton() {
+        if (elements.playIcon && elements.pauseIcon) {
+            elements.playIcon.style.display = isPlaying ? 'none' : 'block';
+            elements.pauseIcon.style.display = isPlaying ? 'block' : 'none';
+        }
+    }
+    
+    function toggleShuffle() {
+        isShuffle = !isShuffle;
+        elements.shuffleBtn?.classList.toggle('active', isShuffle);
+        console.log('Shuffle:', isShuffle);
+    }
+    
+    function toggleRepeat() {
+        isRepeat = !isRepeat;
+        elements.repeatBtn?.classList.toggle('active', isRepeat);
+        console.log('Repeat:', isRepeat);
+    }
+    
+    function updateProgress() {
+        if (!isDragging && elements.player.duration) {
+            const percent = (elements.player.currentTime / elements.player.duration) * 100;
+            if (elements.progressFill) elements.progressFill.style.width = percent + '%';
+            if (elements.progressKnob) elements.progressKnob.style.left = percent + '%';
+        }
+    }
+    
+    function seekToPosition(e) {
+        if (!elements.progressBar || !elements.player.duration) return;
+        
+        const rect = elements.progressBar.getBoundingClientRect();
+        let clientX = e.clientX || (e.touches && e.touches[0]?.clientX);
+        if (!clientX) return;
+        
+        const percent = Math.max(0, Math.min(100, ((clientX - rect.left) / rect.width) * 100));
+        elements.player.currentTime = (percent / 100) * elements.player.duration;
+        
+        if (elements.progressFill) elements.progressFill.style.width = percent + '%';
+        if (elements.progressKnob) elements.progressKnob.style.left = percent + '%';
+    }
+    
+    // SETUP EVENT LISTENERS WITH EXPLICIT BINDING
+    
+    // Previous button - try multiple methods
+    if (elements.prevBtn) {
+        // Method 1: Direct onclick
+        elements.prevBtn.onclick = function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            prevTrack();
+            return false;
+        };
+        
+        // Method 2: addEventListener as backup
+        elements.prevBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            prevTrack();
+        }, true);
+        
+        console.log('Prev button listeners attached');
+    } else {
+        console.error('PREV BUTTON NOT FOUND!');
+    }
+    
+    // Next button - try multiple methods
+    if (elements.nextBtn) {
+        // Method 1: Direct onclick
+        elements.nextBtn.onclick = function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            nextTrack();
+            return false;
+        };
+        
+        // Method 2: addEventListener as backup
+        elements.nextBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            nextTrack();
+        }, true);
+        
+        console.log('Next button listeners attached');
+    } else {
+        console.error('NEXT BUTTON NOT FOUND!');
+    }
+    
+    // Play/Pause button
+    if (elements.playPauseBtn) {
+        elements.playPauseBtn.onclick = function(e) {
+            e.preventDefault();
+            togglePlay();
+        };
+        console.log('Play/pause button listener attached');
+    }
+    
+    // Shuffle button
+    if (elements.shuffleBtn) {
+        elements.shuffleBtn.onclick = function(e) {
+            e.preventDefault();
+            toggleShuffle();
+        };
+    }
+    
+    // Repeat button
+    if (elements.repeatBtn) {
+        elements.repeatBtn.onclick = function(e) {
+            e.preventDefault();
+            toggleRepeat();
+        };
+    }
+    
+    // Record clicks (desktop only)
+    if (elements.prevRecord) {
+        elements.prevRecord.onclick = function(e) {
+            e.preventDefault();
+            prevTrack();
+        };
+    }
+    
+    if (elements.nextRecord) {
+        elements.nextRecord.onclick = function(e) {
+            e.preventDefault();
+            nextTrack();
+        };
+    }
+    
+    if (elements.centerRecord) {
+        elements.centerRecord.onclick = function(e) {
+            e.preventDefault();
+            togglePlay();
+        };
+    }
+    
+    // Progress bar
+    if (elements.progressBar) {
+        elements.progressBar.onclick = seekToPosition;
+        
+        if (elements.progressKnob) {
+            let startDrag = function(e) {
+                isDragging = true;
+                e.preventDefault();
+            };
+            
+            elements.progressKnob.onmousedown = startDrag;
+            elements.progressKnob.ontouchstart = startDrag;
+        }
+    }
+    
+    // Document-wide events for dragging
+    document.addEventListener('mousemove', function(e) {
+        if (isDragging) seekToPosition(e);
     });
     
-    document.addEventListener('touchend', () => {
+    document.addEventListener('mouseup', function() {
         isDragging = false;
     });
     
-    // Audio events
-    player.addEventListener('timeupdate', updateProgress);
+    document.addEventListener('touchmove', function(e) {
+        if (isDragging) seekToPosition(e);
+    });
     
-    player.addEventListener('play', () => {
+    document.addEventListener('touchend', function() {
+        isDragging = false;
+    });
+    
+    // Player events
+    elements.player.addEventListener('timeupdate', updateProgress);
+    elements.player.addEventListener('play', function() {
         isPlaying = true;
         updatePlayButton();
     });
-    
-    player.addEventListener('pause', () => {
+    elements.player.addEventListener('pause', function() {
         isPlaying = false;
         updatePlayButton();
     });
-    
-    player.addEventListener('ended', () => {
+    elements.player.addEventListener('ended', function() {
         if (isRepeat) {
-            player.currentTime = 0;
-            player.play();
+            elements.player.currentTime = 0;
+            elements.player.play();
         } else {
             nextTrack();
         }
     });
     
     // Keyboard controls
-    document.addEventListener('keydown', (e) => {
-        switch(e.key) {
-            case ' ':
-            case 'Enter':
-                if (document.activeElement === playPauseBtn || 
-                    document.activeElement === centerRecord) {
-                    e.preventDefault();
-                    togglePlay();
-                }
-                break;
-            case 'ArrowLeft':
-                e.preventDefault();
-                prevTrack();
-                break;
-            case 'ArrowRight':
-                e.preventDefault();
-                nextTrack();
-                break;
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'ArrowLeft') {
+            e.preventDefault();
+            prevTrack();
+        } else if (e.key === 'ArrowRight') {
+            e.preventDefault();
+            nextTrack();
+        } else if (e.key === ' ' && (document.activeElement === document.body || document.activeElement === elements.playPauseBtn)) {
+            e.preventDefault();
+            togglePlay();
         }
     });
     
-    // Focus accessibility for records
-    [prevRecord, centerRecord, nextRecord].forEach(record => {
-        if (record) {
-            record.addEventListener('keydown', (e) => {
-                if (e.key === 'Enter' || e.key === ' ') {
-                    e.preventDefault();
-                    if (record === prevRecord) prevTrack();
-                    else if (record === nextRecord) nextTrack();
-                    else if (record === centerRecord) togglePlay();
-                }
-            });
+    // Load saved state
+    try {
+        const saved = sessionStorage.getItem('playerState');
+        if (saved) {
+            const state = JSON.parse(saved);
+            currentIndex = state.currentIndex || 0;
+            isShuffle = state.isShuffle || false;
+            isRepeat = state.isRepeat || false;
+            if (isShuffle) elements.shuffleBtn?.classList.add('active');
+            if (isRepeat) elements.repeatBtn?.classList.add('active');
         }
-    });
-}
-
-// Initialize when DOM is ready
-if (document.getElementById('player')) {
-    init();
-}
+    } catch(e) {}
+    
+    // Save state on changes
+    function saveState() {
+        try {
+            sessionStorage.setItem('playerState', JSON.stringify({
+                currentIndex,
+                isShuffle,
+                isRepeat
+            }));
+        } catch(e) {}
+    }
+    
+    // Initialize display
+    updateWheel();
+    
+    console.log('Player initialization complete!');
+    
+    // Debug: Add a global function for testing
+    window.debugPlayer = {
+        next: nextTrack,
+        prev: prevTrack,
+        play: togglePlay,
+        elements: elements
+    };
+    console.log('Debug: You can test with window.debugPlayer.next() or .prev()');
+});
