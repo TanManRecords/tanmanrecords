@@ -1,7 +1,7 @@
 // Track data - exact display order for the wheel
 const tracks = [
     { title: "DOGHAT - NATURAL HIGH (TMR006)", img: "images/SIPPIN2.png", src: "music/SIPPIN.mp3" },
-    { title: "HEAD? - TELL ME TO SPANK ME (TMR002)", img: "head?.png", src: "music/track 6.m4a" },
+    { title: "HEAD? - TELL ME TO SPANK ME (TMR003)", img: "head?.png", src: "music/track 6.m4a" },
     { title: "DOGHAT - D.H.I.T.H", img: "images/D.H.I.T.H.png", src: "music/D.H.I.T.H.mp3" },
     { title: "12 HZUI - FISH CITY", img: "images/fish city.png", src: "music/fish city.m4a" },
     { title: "WANKYWANKY", img: "images/wankywanky.png", src: "music/wankywanky.mp3" },
