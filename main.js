@@ -3,7 +3,7 @@ const tracks = [
     { title: "DOGHAT - NATURAL HIGH (TMR006)", img: "images/SIPPIN2.png", src: "music/SIPPIN.mp3" },
     { title: "HEAD? - TELL ME TO SPANK ME (TMR003)", img: "images/head.png", src: "music/track 6.m4a" },
     { title: "DOGHAT - D.H.I.T.H (TMR001)", img: "images/indahouse.png", src: "music/D.H.I.T.H.mp3" },
-    { title: "12 HZUI - FISH CITY", img: "images/fish city.png", src: "music/fish city.m4a" },
+    { title: "GROOBES - FISH CITY (TMR007)", img: "images/groobes.png", src: "music/fish city.m4a" },
     { title: "WANKYWANKY", img: "images/wankywanky.png", src: "music/wankywanky.mp3" },
     { title: "STILLNESS", img: "images/stillness.png", src: "music/stillness.m4a" }
 ];
