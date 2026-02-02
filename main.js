@@ -1,6 +1,6 @@
 // Track data - exact display order for the wheel
 const tracks = [
-    { title: "I REGAZZI - GOIN' 2 MIAMI //preview// (TMR009)", img: "images/iregazzi.png", src: "music/wankywanky.mp3" },
+    { title: "I REGAZZI - GOIN' 2 MIAMI //preview// (TMR009)", img: "images/iregazzi.png", src: "music/iregazzi.m4a" },
     { title: "DOGHAT - NATURAL HIGH (TMR006)", img: "images/SIPPIN2.png", src: "music/SIPPIN.mp3" },
     { title: "HEAD? - TELL ME TO SPANK ME (TMR003)", img: "images/head.png", src: "music/track 6.m4a" },
     { title: "DOGHAT - D.H.I.T.H (TMR001)", img: "images/indahouse.png", src: "music/D.H.I.T.H.mp3" },
