@@ -39,7 +39,7 @@ header {
 }
 
 .logo {
-    width: 120px;
+    width: 200px;
     height: auto;
     display: block;
 }
@@ -404,7 +404,7 @@ footer a:hover {
     }
 
     .logo {
-        width: 60px;
+        width: 130px;
     }
 
     nav {
