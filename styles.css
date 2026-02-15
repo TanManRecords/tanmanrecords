@@ -1,6 +1,6 @@
 /* CSS Variables */
 :root {
-    --bg: #191918;
+    --bg: #191a1a;
     --text: #d0bf7a;
     --text-dim: #9c8f5a;
     --line: #d0bf7a40;
@@ -39,7 +39,7 @@ header {
 }
 
 .logo {
-    width: 240px;
+    width: 120px;
     height: auto;
     display: block;
 }
@@ -201,6 +201,7 @@ footer a:hover {
     justify-content: center;
     align-items: center;
     gap: 30px;
+    margin-bottom: 20px;
 }
 
 .control-btn {
@@ -240,6 +241,32 @@ footer a:hover {
 .control-btn.repeat.active {
     color: #fff;
     background: rgba(208, 191, 122, 0.2);
+}
+
+/* Vinyl Purchase Link */
+.vinyl-link {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.vinyl-link a {
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    color: #4CAF50;
+    text-decoration: none;
+    font-size: 14px;
+    letter-spacing: 1px;
+    font-weight: 400;
+    transition: color 0.3s ease;
+}
+
+.vinyl-link a:hover {
+    color: #66BB69;
+    text-decoration: underline;
+}
+
+.vinyl-link a:focus {
+    outline: 1px solid #4CAF50;
+    outline-offset: 3px;
 }
 
 /* About Page */
@@ -425,6 +452,17 @@ footer a:hover {
     .control-btn.play-pause {
         width: 48px;
         height: 48px;
+    }
+    
+    /* Mobile vinyl link */
+    .vinyl-link {
+        margin-top: 15px;
+    }
+    
+    .vinyl-link a {
+        font-size: 13px;
+        padding: 10px;
+        display: inline-block;
     }
 
     /* About Mobile */
